@@ -1,0 +1,556 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    overflow-x: hidden;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.cart-icon-container {
+    position: relative;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+#cart-icon {
+    font-size: 1.8rem;
+}
+
+.cart-count {
+    background-color: #ff5722;
+    color: white;
+    border-radius: 50%;
+    padding: 0.2em 0.5em;
+    font-size: 0.7rem;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    z-index: 1002;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.product-card h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.product-card p {
+    font-size: 1.1rem;
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.product-card button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.product-card button:hover {
+    background-color: #0056b3;
+}
+
+/* Cart Sidebar */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100%;
+    background-color: #f8f9fa;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    visibility: hidden;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+.cart-sidebar.open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: all;
+}
+
+.cart-sidebar h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+}
+
+.cart-items {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 5px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.item-quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.item-quantity-controls button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 25px;
+    height: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.item-quantity-controls button:hover {
+    background-color: #0056b3;
+}
+
+.item-quantity {
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
+
+.remove-from-cart-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease;
+}
+
+.remove-from-cart-btn:hover {
+    background-color: #c82333;
+}
+
+.cart-summary {
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    margin-top: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: right;
+}
+
+.cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.cart-actions button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+/* Checkout Form */
+.checkout-form {
+    display: none;
+    flex-direction: column;
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.checkout-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.form-section {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: #fdfdfd;
+}
+
+.form-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group select,
+.input-group textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease; /* Transición para el color del borde */
+}
+
+/* Clases para validación visual de los inputs */
+.input-group input.valid {
+    border-color: #28a745; /* Verde */
+}
+
+.input-group input.invalid {
+    border-color: #dc3545; /* Rojo */
+}
+
+.phone-group .phone-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.phone-group .phone-inputs input {
+    flex: 1;
+    width: auto;
+}
+
+.input-group textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.error-message.visible {
+    display: block;
+}
+
+.payment-options {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.payment-options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.payment-options input[type="radio"] {
+    margin-right: 8px;
+    width: 18px;
+    height: 18px;
+    accent-color: #007bff;
+}
+
+.card-details-section {
+    display: none;
+    flex-direction: column;
+}
+
+.card-number-group {
+    position: relative;
+}
+
+/* Estilos para el ícono de validación de número de tarjeta */
+#card-number-validation-icon {
+    position: absolute;
+    right: 35px; /* Ajusta la posición para dejar espacio al nuevo ícono */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}
+
+#card-number-validation-icon.valid {
+    color: #28a745; /* Verde */
+}
+
+#card-number-validation-icon.invalid {
+    color: #dc3545; /* Rojo */
+    font-weight: bold; /* Opcional: hacer la cruz más visible */
+    font-size: 1.4rem; /* Opcional: hacer la cruz más grande */
+}
+
+/* NUEVO: Estilos para el ícono de la marca de tarjeta */
+#card-brand-icon {
+    position: absolute;
+    right: 10px; /* Posiciona a la derecha, cerca del borde */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem; /* Tamaño del ícono */
+    color: #666; /* Color por defecto */
+}
+
+#card-brand-icon.visa {
+    color: #1a1f71; /* Azul de Visa */
+}
+
+#card-brand-icon.mastercard {
+    color: #eb001b; /* Rojo de Mastercard */
+}
+
+
+.card-expiry-cvv-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 0;
+}
+
+.card-expiry-cvv-group .input-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.form-actions .btn-primary,
+.form-actions .btn-secondary {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+}
+
+/* Checkout Success Message */
+.checkout-success-message {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #e6ffe6;
+    border: 1px solid #a8e6a8;
+    border-radius: 8px;
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.checkout-success-message h2 {
+    color: #218838;
+    margin-bottom: 15px;
+}
+
+.checkout-success-message p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 1rem 15px;
+    }
+    header h1 {
+        margin-bottom: 10px;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .cart-sidebar {
+        width: 100%;
+        height: 100vh;
+        top: 0;
+    }
+
+    .checkout-form {
+        padding: 20px;
+    }
+
+    .form-section {
+        padding: 15px;
+    }
+
+    .input-group input[type="text"],
+    .input-group input[type="email"],
+    .input-group select,
+    .input-group textarea {
+        width: 100%;
+    }
+
+    .card-expiry-cvv-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-actions {
+        flex-direction: column;
+    }
+    .payment-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .phone-group .phone-inputs {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
